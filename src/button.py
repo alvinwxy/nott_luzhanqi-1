@@ -15,11 +15,14 @@ class Button():
         if outline:
             pygame.draw.rect(win, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
             
-        pygame.draw.rect(win, self.color, (self.x,self.y,self.width,self.height),0)
+        s = pygame.Surface((self.width,self.height), pygame.SRCALPHA)   # per-pixel alpha
+        s.fill(self.getColor())
+        win.blit(s, (self.x, self.y))
         
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 12)
             text = font.render(self.text, 1, (0,0,0))
+            #Position the text on the center of the button
             win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
 
     def isOver(self, pos):
