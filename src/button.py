@@ -14,10 +14,10 @@ class Button():
         #Call this method to draw the button on the screen
         if outline:
             pygame.draw.rect(win, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
-            
+
         self.button_surface.fill(self.getColor())
         win.blit(self.button_surface, (self.x, self.y))
-        
+
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 12)
             text = font.render(self.text, 1, (0,0,0))
@@ -29,7 +29,7 @@ class Button():
         if pos[0] > self.x and pos[0] < self.x + self.width:
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
-            
+
         return False
 
     def isPressed(self, pos):
