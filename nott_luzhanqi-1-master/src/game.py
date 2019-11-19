@@ -60,13 +60,13 @@ def setupPhase():
     drawBoard()
 
     #draws text and pieces beside board
-    titleTextObj = pygame.font.Font("bin\OpenSans.ttf", 38)
+    titleTextObj = pygame.font.Font("./Art\OpenSans.ttf", 38)
     titleTextSurfaceObj = titleTextObj.render("PIECES", True, black)
     titleTextRectObj = titleTextSurfaceObj.get_rect()
     titleTextRectObj.center = (925, 75)
     gameDisplay.blit(titleTextSurfaceObj, titleTextRectObj)
 
-    textObj = pygame.font.Font("bin\OpenSans.ttf", 18)
+    textObj = pygame.font.Font("./Art\OpenSans.ttf", 18)
 
     x = 745
     y = 150
