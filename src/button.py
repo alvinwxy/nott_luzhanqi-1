@@ -1,4 +1,5 @@
 import pygame
+from pieces import *
 
 class Button():
     def __init__(self, x, y, width, height, color = (255,255,255), transparent = False, outline = False, outlineColor = (0,0,0), text = '', textColor = (0,0,0)):
@@ -16,6 +17,8 @@ class Button():
         #record button status
         self.buttonDown = False
         self.hovering = False
+        #piece is an object of Piece or it's subclasses
+        self.piece = None
 
     def handleEvent(self,event):
         if event.type not in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN):
@@ -45,7 +48,6 @@ class Button():
 
         return events
     
-    
     def isOver(self, pos):
         #check if pos is inside button(including outline)
         if pos[0] >= self.x and pos[0] <= self.x + self.width:
@@ -70,21 +72,33 @@ class Button():
         self.outline = outline
         self.outlineColor = outlineColor
 
+    def getPiece(self):
+        return self.piece
+
+    def setPiece(self, piece):
+        #piece is an object of Piece or it's subclasses
+        #set piece to None to remove piece
+        self.piece = piece
+
     def update(self,color,outline,outlineColor):
         self.setColor(color)
         self.setOutline(outline,outlineColor)
         
-    def draw(self,win):
+    def draw(self,surface):
         #Call this method to draw the button on the screen
-        if self.outline:
-            pygame.draw.rect(win, self.outlineColor, self.rect, 1)   #draw outline
-           
         if not self.transparent:
-            pygame.draw.rect(win, self.color, self.rect, 0)  #draw rect
+            pygame.draw.rect(surface, self.color, self.rect, 0)  #draw rect
         
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 12)
             text = font.render(self.text, 1, self.textColor)
             #Position the text on the center of the button
-            win.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
+            surface.blit(text, (self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
 
+        if self.piece != None:
+            image = pygame.image.load(self.piece.getPath())
+            surface.blit(image, (self.x + (self.width / 2 - image.get_width() / 2), self.y + (self.height / 2 - image.get_height() / 2)))
+
+        if self.outline:
+            pygame.draw.rect(surface, self.outlineColor, self.rect, 2)   #draw outline
+           
