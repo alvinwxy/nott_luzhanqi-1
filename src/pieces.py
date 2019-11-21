@@ -2,7 +2,8 @@ class Piece:
 
     alliance = None
     position = None
-    img = None
+    path = None
+    available = 0
 
     def __init__(self):
         pass
@@ -10,8 +11,15 @@ class Piece:
     def toString(self):
         return self.__class__.__name__
 
-    def getImg(self):
-        return self.img
+    def getAvailable(self):
+        return self.available
+
+    def destroy(self):
+        if available > 0:
+            available = available - 1
+
+    def getPath(self):
+        return self.path
 
 class NullPiece(Piece):
     pass
@@ -23,8 +31,11 @@ class Flag(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
         self.taken = False
+
+    def istaken(self):
+        return self.taken
 
 class Grenade(Piece):
 
@@ -34,7 +45,7 @@ class Grenade(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Landmine(Piece):
 
@@ -44,7 +55,7 @@ class Landmine(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
     
 class Marshal(Piece):
 
@@ -54,7 +65,7 @@ class Marshal(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class General(Piece):
 
@@ -64,7 +75,7 @@ class General(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Lieutenant(Piece):
 
@@ -74,7 +85,7 @@ class Lieutenant(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Brigadier(Piece):
 
@@ -84,7 +95,7 @@ class Brigadier(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Colonel(Piece):
 
@@ -94,7 +105,7 @@ class Colonel(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Major(Piece):
 
@@ -104,7 +115,7 @@ class Major(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Captain(Piece):
 
@@ -114,7 +125,7 @@ class Captain(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Commander(Piece):
 
@@ -124,7 +135,7 @@ class Commander(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
 
 class Engineer(Piece):
 
@@ -134,4 +145,4 @@ class Engineer(Piece):
     def __init__(self,alliance,position):
         self.alliance = alliance
         self.position = position
-        self.img = "bin\\"+ self.toString() +".png"
+        self.path = "bin\\" + self.toString() + ".png"
