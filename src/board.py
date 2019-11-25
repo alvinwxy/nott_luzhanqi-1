@@ -1,6 +1,7 @@
 import pygame
 import operator
 from button import Button
+from pieces import *
 
 class Board:
     def __init__(self,width,height,numRow,numCol):
@@ -39,19 +40,10 @@ class Board:
         board[12][1] = "HQ"
         board[12][3] = "HQ"
 
-        #Setting Front Line
-        board[6][0] = "FL"
-        board[6][2] = "FL"
-        board[6][4] = "FL"
-
-        #Setting Mountain Border
-        board[6][1] = "MB"
-        board[6][3] = "MB"
-
         return board
 
     def initialiseButton(self):
-        color = (200,200,200)
+        color = (200,200,200)  #sdfsdf
         button = [[Button(color,i*self.width,j*self.height,self.width,self.height,"placeholder") for i in range(self.numCol)] for j in range(self.numRow)]
 
         for i in range(self.numRow):
@@ -63,11 +55,12 @@ class Board:
         return button
 
 
-    def draw(self,surface):
+    def draw(self,surface,width,height):
         """Draw the Board"""
         for j in range(self.numCol):
             for i in range(self.numRow):
-                self.button[i][j].draw(surface,2)
+                if i!=6:  #removed mountain border/frontline
+                    self.button[i][j].draw(surface,2)
 
     def updateColor(self,gridType):
         if gridType == "SS":
@@ -76,10 +69,6 @@ class Board:
             color = self.green
         elif gridType == "HQ":
             color = self.yellow
-        elif gridType == "FL":
-            color = self.blue
-        elif gridType == "MB":
-            color = self.purple
 
         return color
 
@@ -103,3 +92,21 @@ class Board:
                 
                 if not invalidColor:
                     self.button[i][j].update(color)
+
+    temporary={}
+    def accessingPieces(self):
+
+        self.temporary["Brigadier"] = Brigadier(0,0)
+        self.temporary["Captain"] = Captain(0,1)
+        self.temporary["Colonel"] = Colonel(0,2)
+        self.temporary["Commander"] = Commander(0,3)
+        self.temporary["Engineer"] = Engineer(0,4)
+        self.temporary["General"] = General(0,5)
+        self.temporary["Flag"] = Flag(0,6)
+        self.temporary["Bomb"] = Grenade(0,7)
+        self.temporary["Landmine"] = Landmine(0,8)
+        self.temporary["Lieutenant"] = Lieutenant(0,9)
+        self.temporary["Major"] = Major(0,10)
+        self.temporary["Marshal"] = Marshal(0,11)
+
+    

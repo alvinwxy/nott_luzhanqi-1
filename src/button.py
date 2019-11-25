@@ -1,7 +1,8 @@
 import pygame
+from pieces import *
 
 class Button():
-    def __init__(self, color, x,y,width,height, text=''):
+    def __init__(self, color, x,y,width,height, text='',alliance = None,rank = None,img = None): #piece to take in piece object (to be set during setup when click)
         self.color = color
         self.x = x
         self.y = y
@@ -50,3 +51,9 @@ class Button():
 
     def update(self,color):
         self.setColor(color)
+
+    def setPiece(alliance,rank,image):
+        self.alliance=alliance
+        self.rank=rank
+        img=image
+

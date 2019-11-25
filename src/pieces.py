@@ -16,6 +16,7 @@ class Piece:
 class NullPiece(Piece):
     pass
 
+
 class Flag(Piece):
 
     available = 1
@@ -25,6 +26,12 @@ class Flag(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
         self.taken = False
+       
+    def getAlliance():
+        return alliance
+
+    def getImg():
+        return img
 
 class Grenade(Piece):
 
@@ -36,6 +43,15 @@ class Grenade(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class Landmine(Piece):
 
     rank = 0
@@ -45,6 +61,15 @@ class Landmine(Piece):
         self.alliance = alliance
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
+
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
     
 class Marshal(Piece):
 
@@ -56,6 +81,15 @@ class Marshal(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class General(Piece):
 
     rank = 2
@@ -65,6 +99,15 @@ class General(Piece):
         self.alliance = alliance
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
+
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
 
 class Lieutenant(Piece):
 
@@ -76,6 +119,15 @@ class Lieutenant(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class Brigadier(Piece):
 
     rank = 4
@@ -85,6 +137,15 @@ class Brigadier(Piece):
         self.alliance = alliance
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
+
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
 
 class Colonel(Piece):
 
@@ -96,6 +157,15 @@ class Colonel(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class Major(Piece):
 
     rank = 6
@@ -105,6 +175,15 @@ class Major(Piece):
         self.alliance = alliance
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
+
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
 
 class Captain(Piece):
 
@@ -116,6 +195,15 @@ class Captain(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class Commander(Piece):
 
     rank = 8
@@ -126,6 +214,15 @@ class Commander(Piece):
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
 
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
+
 class Engineer(Piece):
 
     rank = 9
@@ -135,3 +232,12 @@ class Engineer(Piece):
         self.alliance = alliance
         self.position = position
         self.img = "bin\\"+ self.toString() +".png"
+
+    def getAlliance():
+        return alliance
+
+    def getRank():
+        return rank
+
+    def getImg():
+        return img
