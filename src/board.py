@@ -14,9 +14,13 @@ class Board:
         self.numRow = numRow
         self.numCol = numCol
         self.layout = self.generateLayout()
-        #record all tile status
+        #board
+        brdImgPath = "bin\\board.png"
+        orgBrdImg = pygame.image.load(brdImgPath)
+        self.brdImg = pygame.transform.scale(orgBrdImg, (width*numCol, height*numRow))
+        #tile
         self.tiles = self.generateTiles()
-        #record all selection pane status
+        #selection pane
         self.selectionPaneTiles = self.generateSelectionPane()
         self.pieceData = {"Flag": [1],
                           "Grenade": [2],
@@ -67,7 +71,7 @@ class Board:
         return layout
 
     def generateTiles(self):
-        tiles = [[Button(i * self.width, j * self.height, self.width, self.height, transparent = True, text = 'placeholder') for i in range(self.numCol)] for j in range(self.numRow)]
+        tiles = [[Button(i * self.width, j * self.height, self.width, self.height, transparent = True) for i in range(self.numCol)] for j in range(self.numRow)]
         return tiles
 
     def generateSelectionPane(self):
@@ -113,7 +117,9 @@ class Board:
         return selectionPaneTiles
 
     def draw(self,surface):
-        #Draw Board
+        #Draw board
+        surface.blit(self.brdImg,(0,0))
+        #Draw tiles
         for j in range(self.numCol):
             for i in range(self.numRow):
                 self.tiles[i][j].draw(surface)
