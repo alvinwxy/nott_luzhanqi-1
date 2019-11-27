@@ -9,6 +9,18 @@ class Board:
         self.green = pygame.Color(0,255,0)
         self.blue = pygame.Color(0,0,255)
         self.black = pygame.Color(0,0,0)
+        self.pieceData = {"Flag": [1],
+                          "Grenade": [2],
+                          "Landmine": [3],
+                          "Marshal": [1],
+                          "General": [1], 
+                          "Lieutenant": [2], 
+                          "Brigadier": [2],
+                          "Colonel": [2], 
+                          "Major": [2], 
+                          "Captain": [3], 
+                          "Commander": [3],
+                          "Engineer": [3]}
         self.width = width
         self.height = height
         self.numRow = numRow
@@ -22,19 +34,10 @@ class Board:
         self.tiles = self.generateTiles()
         #selection pane
         self.selectionPaneTiles = self.generateSelectionPane()
-        self.pieceData = {"Flag": [1],
-                          "Grenade": [2],
-                          "Landmine": [3],
-                          "Marshal": [1],
-                          "General": [1], 
-                          "Lieutenant": [2], 
-                          "Brigadier": [2],
-                          "Colonel": [2], 
-                          "Major": [2], 
-                          "Captain": [3], 
-                          "Commander": [3],
-                          "Engineer": [3]}
-
+        #holding piece
+        self.currentPiece = None
+        #moving piece
+        self.movingPiece = False
 
     def generateLayout(self):
         #Initialise the game board
@@ -79,34 +82,35 @@ class Board:
         #draws text and pieces beside board
         x = 725
         y = 200
-        for i in range(12):
+        i = 0
+        for item in self.pieceData:
             selectionPaneTiles[i] = Button(x, y, 50, 50, color = (255,255,0))
-            #better way?
-            if i == 0:
+            if item == "Flag":
                 selectionPaneTiles[i].setPiece(Flag(0,selectionPaneTiles[i].getPos()))
-            elif i == 1:
+            elif item == "Grenade":
                 selectionPaneTiles[i].setPiece(Grenade(0,selectionPaneTiles[i].getPos()))
-            elif i == 2:
+            elif item == "Landmine":
                 selectionPaneTiles[i].setPiece(Landmine(0,selectionPaneTiles[i].getPos()))
-            elif i == 3:
+            elif item == "Marshal":
                 selectionPaneTiles[i].setPiece(Marshal(0,selectionPaneTiles[i].getPos()))
-            elif i == 4:
+            elif item == "General":
                 selectionPaneTiles[i].setPiece(General(0,selectionPaneTiles[i].getPos()))
-            elif i == 5:
+            elif item == "Lieutenant":
                 selectionPaneTiles[i].setPiece(Lieutenant(0,selectionPaneTiles[i].getPos()))
-            elif i == 6:
+            elif item == "Brigadier":
                 selectionPaneTiles[i].setPiece(Brigadier(0,selectionPaneTiles[i].getPos()))
-            elif i == 7:
+            elif item == "Colonel":
                 selectionPaneTiles[i].setPiece(Colonel(0,selectionPaneTiles[i].getPos()))
-            elif i == 8:
+            elif item == "Major":
                 selectionPaneTiles[i].setPiece(Major(0,selectionPaneTiles[i].getPos()))
-            elif i == 9:
+            elif item == "Captain":
                 selectionPaneTiles[i].setPiece(Captain(0,selectionPaneTiles[i].getPos()))
-            elif i == 10:
+            elif item == "Commander":
                 selectionPaneTiles[i].setPiece(Commander(0,selectionPaneTiles[i].getPos()))
-            elif i == 11:
+            elif item == "Engineer":
                 selectionPaneTiles[i].setPiece(Engineer(0,selectionPaneTiles[i].getPos()))
-
+            selectionPaneTiles[i].setFlag(item)
+            i = i + 1
             if x > 1050:
                 x = 725
                 y += 150
@@ -133,22 +137,32 @@ class Board:
         titleTextRectObj.center = (925, 75)
         surface.blit(titleTextSurfaceObj, titleTextRectObj)
         #Draw Selection Pane Tiles
-        for k in range(len(self.selectionPaneTiles)):
+        k = 0
+        for item in self.pieceData:
+            #Draw piece image
+            if (self.pieceData[item][0] == 0):
+                self.selectionPaneTiles[k].setPiece(None)
             self.selectionPaneTiles[k].draw(surface)
             #Draw Selection Pane piece's name
             textObj = pygame.font.Font("bin\OpenSans.ttf", 18)
-            textSurfaceObj = textObj.render(self.selectionPaneTiles[k].getPiece().toString(), True, self.black)
+            textSurfaceObj = textObj.render(item, True, self.black)
             textRectObj = textSurfaceObj.get_rect()
             textRectObj.center = tuple(x + y for x, y in zip(self.selectionPaneTiles[k].getPos(), (25,-25)))
             surface.blit(textSurfaceObj, textRectObj)
-
-            numTextSurfaceObj = textObj.render("x " + str(self.selectionPaneTiles[k].getPiece().getAvailable()), True, self.black)
+            #Draw number of piece remaining
+            numTextSurfaceObj = textObj.render("x " + str(self.pieceData[item][0]), True, self.black)
             numTextRectObj = numTextSurfaceObj.get_rect()
             numTextRectObj.center = tuple(x + y for x, y in zip(self.selectionPaneTiles[k].getPos(), (25,75)))
             surface.blit(numTextSurfaceObj, numTextRectObj)
+            k = k + 1
+
+        if self.currentPiece != None:
+            mousePos = pygame.mouse.get_pos()
+            cursorImg = pygame.image.load(self.currentPiece.getPath())
+            surface.blit(cursorImg, tuple(x + y for x, y in zip(mousePos, (-25,-25))))
 
     def handleEvent(self, event):
-        #call button event handler
+        #handle mouse click
         for j in range(self.numCol):
             for i in range(self.numRow):
                 outline = False
@@ -157,10 +171,26 @@ class Board:
                     #if is hovering on button
                     outline = True
                     outlineColor = self.green
-                if 'click' in self.tiles[i][j].handleEvent(event):
+                if 'down' in self.tiles[i][j].handleEvent(event):
                     #if button is clicked
                     outline = True
                     outlineColor = self.blue
+                if 'click' in self.tiles[i][j].handleEvent(event):
+                    #if button is clicked & released
+                    if self.currentPiece == None:
+                        if self.tiles[i][j].getPiece() != None:
+                            #take the piece if the tile already contain a piece
+                            self.currentPiece = self.tiles[i][j].getPiece()
+                            self.tiles[i][j].setPiece(None)
+                            self.movingPiece = True
+                    else:
+                        if self.tiles[i][j].getPiece() == None:
+                            #place the piece if the tile does not contain a piece
+                            self.tiles[i][j].setPiece(self.currentPiece)
+                            if not self.movingPiece:
+                                self.pieceData[self.currentPiece.toString()][0] = self.pieceData[self.currentPiece.toString()][0] - 1
+                            self.currentPiece = None
+                            self.movingPiece = False
                 if 'exit' in self.tiles[i][j].handleEvent(event):
                     #if mouse exited a button
                     outline = False
@@ -173,9 +203,20 @@ class Board:
                 #if is hovering on button
                 outline = True
                 outlineColor = self.red
-            if 'click' in self.selectionPaneTiles[k].handleEvent(event):
+            if 'down' in self.selectionPaneTiles[k].handleEvent(event):
+                #if button is clicked
                 outline = True
                 outlineColor = self.black
+            if 'click' in self.selectionPaneTiles[k].handleEvent(event):
+                #if button is clicked & released
+                if self.currentPiece == None:
+                    self.currentPiece = self.selectionPaneTiles[k].getPiece()
+                else:
+                    if self.movingPiece and self.currentPiece.toString() == self.selectionPaneTiles[k].getFlag():
+                        self.selectionPaneTiles[k].setPiece(self.currentPiece)
+                        self.pieceData[self.currentPiece.toString()][0] = self.pieceData[self.currentPiece.toString()][0] + 1
+                        self.currentPiece = None
+                        self.movingPiece = False
             if 'exit' in self.selectionPaneTiles[k].handleEvent(event):
                 outline = False
             self.selectionPaneTiles[k].update(self.selectionPaneTiles[k].getColor(), outline, outlineColor)
