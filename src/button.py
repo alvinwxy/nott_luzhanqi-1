@@ -16,6 +16,7 @@ class Button():
         self.rect = pygame.Rect(self.x,self.y,self.width,self.height)
         #record button status
         self.buttonDown = False
+        self.buttonPrevDown = False
         self.hovering = False
         #piece is an object of Piece or it's subclasses
         self.piece = None
@@ -41,7 +42,12 @@ class Button():
             events.append('hover')
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.buttonDown = True
-                events.append('click')
+                self.buttonPrevDown = True
+                events.append('down')
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.buttonDown = False
+                if self.buttonPrevDown:
+                    events.append('click')
 
         if exited:
             events.append('exit')
