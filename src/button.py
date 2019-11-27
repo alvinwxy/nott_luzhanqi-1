@@ -20,6 +20,8 @@ class Button():
         self.hovering = False
         #piece is an object of Piece or it's subclasses
         self.piece = None
+        #flag is the name of piece the object originally contain (only used in selection pane)
+        self.flag = None
 
     def handleEvent(self,event):
         if event.type not in (pygame.MOUSEMOTION, pygame.MOUSEBUTTONUP, pygame.MOUSEBUTTONDOWN):
@@ -85,6 +87,12 @@ class Button():
         #piece is an object of Piece or it's subclasses
         #set piece to None to remove piece
         self.piece = piece
+
+    def getFlag(self):
+        return self.flag
+
+    def setFlag(self, flag):
+        self.flag = flag
 
     def update(self,color,outline,outlineColor):
         self.setColor(color)
