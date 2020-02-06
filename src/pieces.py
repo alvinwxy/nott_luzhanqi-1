@@ -3,20 +3,12 @@ class Piece:
     alliance = None
     position = None
     path = None
-    available = 0
 
     def __init__(self):
         pass
     
     def toString(self):
         return self.__class__.__name__
-
-    def getAvailable(self):
-        return self.available
-
-    def destroy(self):
-        if available > 0:
-            available = available - 1
 
     def getPath(self):
         return self.path
@@ -25,8 +17,6 @@ class NullPiece(Piece):
     pass
 
 class Flag(Piece):
-
-    available = 1
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -40,7 +30,6 @@ class Flag(Piece):
 class Grenade(Piece):
 
     rank = 0
-    available = 2
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -50,7 +39,6 @@ class Grenade(Piece):
 class Landmine(Piece):
 
     rank = 0
-    available = 3
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -60,7 +48,6 @@ class Landmine(Piece):
 class Marshal(Piece):
 
     rank = 1
-    available = 1
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -70,7 +57,6 @@ class Marshal(Piece):
 class General(Piece):
 
     rank = 2
-    available = 1
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -80,7 +66,6 @@ class General(Piece):
 class Lieutenant(Piece):
 
     rank = 3
-    available = 2
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -90,7 +75,6 @@ class Lieutenant(Piece):
 class Brigadier(Piece):
 
     rank = 4
-    available = 2
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -100,7 +84,6 @@ class Brigadier(Piece):
 class Colonel(Piece):
 
     rank = 5
-    available = 2
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -110,7 +93,6 @@ class Colonel(Piece):
 class Major(Piece):
 
     rank = 6
-    available = 2
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -120,7 +102,6 @@ class Major(Piece):
 class Captain(Piece):
 
     rank = 7
-    available = 3
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -130,7 +111,6 @@ class Captain(Piece):
 class Commander(Piece):
 
     rank = 8
-    available = 3
 
     def __init__(self,alliance,position):
         self.alliance = alliance
@@ -140,7 +120,6 @@ class Commander(Piece):
 class Engineer(Piece):
 
     rank = 9
-    available = 3
 
     def __init__(self,alliance,position):
         self.alliance = alliance

@@ -75,6 +75,10 @@ class Button():
         #set color of button
         self.color = color
 
+    def setTransparency(self, transparent):
+        #transparent is a boolean
+        self.transparent = transparent
+
     def setOutline(self,outline,outlineColor):
         #set color of outline
         self.outline = outline
@@ -99,9 +103,12 @@ class Button():
         self.setOutline(outline,outlineColor)
         
     def draw(self,surface):
-        #Call this method to draw the button on the screen
+        #Draw the button on the screen
         if not self.transparent:
-            pygame.draw.rect(surface, self.color, self.rect, 0)  #draw rect
+            #draw filled rect
+            s = pygame.Surface((self.width,self.height), pygame.SRCALPHA)   # per-pixel alpha
+            s.fill(self.getColor())
+            surface.blit(s, (self.x, self.y))
         
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 12)
